@@ -191,7 +191,7 @@ class Logic(object):
                     ['cp', '-R', '/app/data/custom/launcher_guacamole_sjva/guacamole', '/etc/guacamole/'],
                     ['ln', '-s', '/etc/guacamole/guacamole.war', '/var/lib/tomcat/webapps/'],
 
-                    ['export', 'GUACAMOLE_HOME=/etc/guacamole'],
+                    ['system', 'export GUACAMOLE_HOME=/etc/guacamole'],
 
                     ['apk', 'add', '--no-cache', 'mariadb', 'mariadb-client', 'mariadb-server-utils', 'pwgen'],
                     ['/etc/guacamole/run.sh', '&'],
