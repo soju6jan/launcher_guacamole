@@ -194,7 +194,7 @@ class Logic(object):
                     ['system', 'export GUACAMOLE_HOME=/etc/guacamole'],
 
                     ['apk', 'add', '--no-cache', 'mariadb', 'mariadb-client', 'mariadb-server-utils', 'pwgen'],
-                    ['/etc/guacamole/run.sh', '&'],
+                    ['system', '/etc/guacamole/run.sh &'],
                     ['system', 'mysql --user=root --password=sjva < /etc/guacamole/create.sql'], 
                     ['system', 'mysql --user=root --password=sjva guacamole_db < /etc/guacamole/initdb.sql'],
 
