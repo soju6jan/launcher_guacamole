@@ -148,9 +148,11 @@ class Logic(object):
     @staticmethod
     def kill():
         try:
-            cmd = ['/var/lib/tomcat/bin/catalina.sh', 'stop']
-            subprocess.Popen(cmd)
-            time.sleep(1)
+            tmp = '/var/lib/tomcat/bin/catalina.sh'
+            if os.path.exist(tmp):
+                cmd = [tmp, 'stop']
+                subprocess.Popen(cmd)
+                time.sleep(1)
 
             if Logic.current_process is not None and Logic.current_process.poll() is None:
                 import psutil
@@ -196,7 +198,7 @@ class Logic(object):
                     ['mysql', '--user=root', '--password=sjva', '<', '/etc/guacamole/create.sql'], 
                     ['mysql', '--user=root', '--password=sjva', 'guacamole_db', '<', '/etc/guacamole/initdb.sql'],
 
-                    ['kill', '-9', '`ps', '-ef', '|', 'grep', 'mysqld', '|', 'awk', "'{print $1}'`"]
+                    ['kill', '-9', '`ps', '-ef', '|', 'grep', 'mysqld', '|', 'awk', "'{print $1}'`"],
                     ['system', "kill -9 `ps -ef | grep mysqld | awk '{print $1}'`"],
                     ['msg', u'설치가 완료되었습니다.']
                 ]
