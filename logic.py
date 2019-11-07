@@ -149,7 +149,7 @@ class Logic(object):
     def kill():
         try:
             tmp = '/var/lib/tomcat/bin/catalina.sh'
-            if os.path.exist(tmp):
+            if os.path.exists(tmp):
                 cmd = [tmp, 'stop']
                 subprocess.Popen(cmd)
                 time.sleep(1)
@@ -181,24 +181,7 @@ class Logic(object):
                 Logic.kill()
                 commands = [
                     ['msg', u'잠시만 기다려주세요.'],
-
-                    ['apk', 'add', '--no-cache', 'openjdk8'],
-                    ['wget', 'http://mirror.navercorp.com/apache/tomcat/tomcat-8/v8.5.47/bin/apache-tomcat-8.5.47.tar.gz'],
-
-                    ['tar', 'xvzf', 'apache-tomcat-8.5.47.tar.gz'],
-                    ['mv', 'apache-tomcat-8.5.47', '/var/lib/tomcat'],
-
-                    ['cp', '-R', '/app/data/custom/launcher_guacamole_sjva/guacamole', '/etc/guacamole/'],
-                    ['ln', '-s', '/etc/guacamole/guacamole.war', '/var/lib/tomcat/webapps/'],
-
-                    ['system', 'export GUACAMOLE_HOME=/etc/guacamole'],
-
-                    ['apk', 'add', '--no-cache', 'mariadb', 'mariadb-client', 'mariadb-server-utils', 'pwgen'],
-                    ['system', '/etc/guacamole/run.sh &'],
-                    ['system', 'mysql --user=root --password=sjva < /etc/guacamole/create.sql'], 
-                    ['system', 'mysql --user=root --password=sjva guacamole_db < /etc/guacamole/initdb.sql'],
-
-                    ['system', "kill -9 `ps -ef | grep mysqld | awk '{print $1}'`"],
+                    ['/app/data/custom/launcher_guacamole_sjva/guacamole/install.sh'],
                     ['msg', u'설치가 완료되었습니다.']
                 ]
                 system.SystemLogicCommand.start('설치', commands)
