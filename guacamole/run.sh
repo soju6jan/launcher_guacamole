@@ -72,6 +72,10 @@ EOF
 	/usr/bin/mysqld --user=mysql --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 < $tfile
 	rm -f $tfile
 
+	/usr/bin/mysqld --user=mysql --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 < /etc/guacamole/create.sql
+
+	/usr/bin/mysqld --user=mysql --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 < /etc/guacamole/initdb.sql
+
 	for f in /docker-entrypoint-initdb.d/*; do
 		case "$f" in
 			*.sql)    echo "$0: running $f"; /usr/bin/mysqld --user=mysql --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 < "$f"; echo ;;
@@ -85,7 +89,7 @@ EOF
 	echo 'MySQL init process done. Ready for start up.'
 	echo
 
-	echo "exec /usr/bin/mysqld --user=mysql --console --skip-name-resolve --skip-networking=0" "$@"
+	#echo "exec /usr/bin/mysqld --user=mysql --console --skip-name-resolve --skip-networking=0" "$@"
 fi
 
 # execute any pre-exec scripts
