@@ -195,10 +195,9 @@ class Logic(object):
 
                     ['apk', 'add', '--no-cache', 'mariadb', 'mariadb-client', 'mariadb-server-utils', 'pwgen'],
                     ['/etc/guacamole/run.sh', '&'],
-                    ['mysql', '--user=root', '--password=sjva', '<', '/etc/guacamole/create.sql'], 
-                    ['mysql', '--user=root', '--password=sjva', 'guacamole_db', '<', '/etc/guacamole/initdb.sql'],
+                    ['system', 'mysql --user=root --password=sjva < /etc/guacamole/create.sql'], 
+                    ['system', 'mysql --user=root --password=sjva guacamole_db < /etc/guacamole/initdb.sql'],
 
-                    ['kill', '-9', '`ps', '-ef', '|', 'grep', 'mysqld', '|', 'awk', "'{print $1}'`"],
                     ['system', "kill -9 `ps -ef | grep mysqld | awk '{print $1}'`"],
                     ['msg', u'설치가 완료되었습니다.']
                 ]
