@@ -1,3 +1,16 @@
+USE mysql;
+FLUSH PRIVILEGES ;
+GRANT ALL ON *.* TO 'root'@'%' identified by 'sjva' WITH GRANT OPTION ;
+GRANT ALL ON *.* TO 'root'@'localhost' identified by 'sjva' WITH GRANT OPTION ;
+SET PASSWORD FOR 'root'@'localhost'=PASSWORD('sjva') ;
+DROP DATABASE IF EXISTS test ;
+FLUSH PRIVILEGES ;
+CREATE DATABASE guacamole_db;
+CREATE USER 'guacamole_user'@'%' IDENTIFIED BY 'sjva';
+GRANT SELECT,INSERT,UPDATE,DELETE ON guacamole_db.* TO 'guacamole_user'@'%';
+FLUSH PRIVILEGES;
+
+USE guacamole_db;
 --
 -- Licensed to the Apache Software Foundation (ASF) under one
 -- or more contributor license agreements.  See the NOTICE file
