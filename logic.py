@@ -54,7 +54,7 @@ class Logic(object):
     def plugin_load():
         try:
             if platform.system() != 'Windows':
-                custom = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin')    
+                custom = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'guacamole')    
                 os.system("chmod 777 -R %s" % custom)
 
             logger.debug('%s plugin_load', package_name)
