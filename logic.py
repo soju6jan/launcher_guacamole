@@ -8,7 +8,6 @@ import logging
 import threading
 import subprocess
 import platform
-import shutil
 import time
 # third-party
 
