@@ -22,7 +22,7 @@ from framework.util import Util, AlchemyEncoder
 from system.logic import SystemLogic
             
 # 패키지
-package_name = __name__.split('.')[0].split('_sjva')[0]
+package_name = __name__.split('.')[0]
 logger = get_logger(package_name)
 from logic import Logic
 from model import ModelSetting
@@ -44,7 +44,7 @@ plugin_info = {
     'icon' : '',
     'developer' : 'soju6jan',
     'description' : 'Guacamole 런처<br><a href="https://guacamole.apache.org" target="_blank">Guacamole 홈페이지</a><br><br>SSH, RDP, VNC 웹 클라이언트 입니다.<br>도커만 지원합니다.',
-    'home' : 'https://github.com/soju6jan/launcher_guacamole_sjva',
+    'home' : 'https://github.com/soju6jan/launcher_guacamole',
     'more' : '',
 }
 #########################################################
