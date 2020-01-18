@@ -179,7 +179,7 @@ class Logic(object):
                 Logic.kill()
                 commands = [
                     ['msg', u'잠시만 기다려주세요.'],
-                    ['/app/data/custom/launcher_guacamole_sjva/guacamole/install.sh'],
+                    ['/app/data/custom/launcher_guacamole/guacamole/install.sh'],
                     ['msg', u'설치가 완료되었습니다.']
                 ]
                 system.SystemLogicCommand.start('설치', commands)
