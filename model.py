@@ -10,17 +10,15 @@ import json
 # sjva 공용
 from framework.logger import get_logger
 from framework import db, app, path_app_root
+from framework.util import Util
+
 # 패키지
 from .plugin import package_name, logger
 
-
-if app.config['config']['run_by_real']:
-    db_file = os.path.join(path_app_root, 'data', 'db', '%s.db' % package_name)
-    app.config['SQLALCHEMY_BINDS'][package_name] = 'sqlite:///%s' % (db_file)
-
+app.config['SQLALCHEMY_BINDS'][package_name] = 'sqlite:///%s' % (os.path.join(path_app_root, 'data', 'db', '%s.db' % package_name))
 
 class ModelSetting(db.Model):
-    __tablename__ = 'plugin_%s_setting' % package_name
+    __tablename__ = '%s_setting' % package_name
     __table_args__ = {'mysql_collate': 'utf8_general_ci'}
     __bind_key__ = package_name
 
@@ -41,9 +39,77 @@ class ModelSetting(db.Model):
     @staticmethod
     def get(key):
         try:
-            return db.session.query(ModelSetting).filter_by(key=key).first().value
+            return db.session.query(ModelSetting).filter_by(key=key).first().value.strip()
         except Exception as e:
             logger.error('Exception:%s %s', e, key)
             logger.error(traceback.format_exc())
-#########################################################
+            
+    
+    @staticmethod
+    def get_int(key):
+        try:
+            return int(ModelSetting.get(key))
+        except Exception as e:
+            logger.error('Exception:%s %s', e, key)
+            logger.error(traceback.format_exc())
+    
+    @staticmethod
+    def get_bool(key):
+        try:
+            return (ModelSetting.get(key) == 'True')
+        except Exception as e:
+            logger.error('Exception:%s %s', e, key)
+            logger.error(traceback.format_exc())
 
+    @staticmethod
+    def set(key, value):
+        try:
+            item = db.session.query(ModelSetting).filter_by(key=key).with_for_update().first()
+            if item is not None:
+                item.value = value.strip()
+                db.session.commit()
+            else:
+                db.session.add(ModelSetting(key, value.strip()))
+        except Exception as e:
+            logger.error('Exception:%s %s', e, key)
+            logger.error(traceback.format_exc())
+
+    @staticmethod
+    def to_dict():
+        try:
+            return Util.db_list_to_dict(db.session.query(ModelSetting).all())
+        except Exception as e:
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())
+
+
+    @staticmethod
+    def setting_save(req):
+        try:
+            for key, value in req.form.items():
+                logger.debug('Key:%s Value:%s', key, value)
+                if key in ['scheduler', 'is_running', 'global_scheduler_sub']:
+                    continue
+                if key == 'default_username' and value.startswith('==='):
+                    continue
+                entity = db.session.query(ModelSetting).filter_by(key=key).with_for_update().first()
+                entity.value = value
+            db.session.commit()
+            return True                  
+        except Exception as e: 
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())
+            logger.debug('Error Key:%s Value:%s', key, value)
+            return False
+
+    @staticmethod
+    def get_list(key):
+        try:
+            value = ModelSetting.get(key)
+            values = [x.strip().replace(' ', '').strip() for x in value.replace('\n', '|').split('|')]
+            values = Util.get_list_except_empty(values)
+            return values
+        except Exception as e: 
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())
+            logger.error('Error Key:%s Value:%s', key, value)

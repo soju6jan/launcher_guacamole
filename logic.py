@@ -97,40 +97,6 @@ class Logic(object):
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
 
-
-    @staticmethod
-    def setting_save(req):
-        try:
-            for key, value in req.form.items():
-                logger.debug('Key:%s Value:%s', key, value)
-                entity = db.session.query(ModelSetting).filter_by(key=key).with_for_update().first()
-                entity.value = value
-            db.session.commit()
-            return True                  
-        except Exception as e: 
-            logger.error('Exception:%s %s', key)
-            logger.error(traceback.format_exc())
-            return False
-
-
-    @staticmethod
-    def get_setting_value(key):
-        try:
-            return db.session.query(ModelSetting).filter_by(key=key).first().value
-        except Exception as e: 
-            logger.error('Exception:%s', e)
-            logger.error(traceback.format_exc())
-
-
-    @staticmethod
-    def scheduler_function():
-        try:
-            pass
-        except Exception as e: 
-            logger.error('Exception:%s', e)
-            logger.error(traceback.format_exc())
-    
-
     # 기본 구조 End
     ##################################################################
 

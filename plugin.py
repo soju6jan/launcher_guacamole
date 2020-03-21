@@ -24,9 +24,8 @@ from system.logic import SystemLogic
 # 패키지
 package_name = __name__.split('.')[0]
 logger = get_logger(package_name)
-from logic import Logic
-from model import ModelSetting
-
+from .logic import Logic
+from .model import ModelSetting
 
 
 blueprint = Blueprint(package_name, package_name, url_prefix='/%s' %  package_name, template_folder=os.path.join(os.path.dirname(__file__), 'templates'))
@@ -69,10 +68,9 @@ def home():
 
 @blueprint.route('/<sub>')
 @login_required
-def detail(sub): 
+def first_menu(sub): 
     if sub == 'setting':
-        setting_list = db.session.query(ModelSetting).all()
-        arg = Util.db_list_to_dict(setting_list)
+        arg = ModelSetting.to_dict()
         arg['status'] = str(Logic.current_process is not None)
         arg['is_installed'] = 'Installed' if Logic.is_installed() else 'Not Installed'
         return render_template('%s_%s.html' % (package_name, sub), arg=arg)
@@ -84,16 +82,11 @@ def detail(sub):
 @blueprint.route('/ajax/<sub>', methods=['GET', 'POST'])
 @login_required
 def ajax(sub):
-    logger.debug('AJAX %s %s', package_name, sub)
-    if sub == 'setting_save':
-        try:
+    try:
+        if sub == 'setting_save':
             ret = Logic.setting_save(request)
             return jsonify(ret)
-        except Exception as e: 
-            logger.error('Exception:%s', e)
-            logger.error(traceback.format_exc())
-    elif sub == 'status':
-        try:
+        elif sub == 'status':
             todo = request.form['todo']
             if todo == 'true':
                 if Logic.current_process is None:
@@ -108,17 +101,12 @@ def ajax(sub):
                     Logic.scheduler_stop()
                     ret =  'stop'
             return jsonify(ret)
-        except Exception as e: 
-            logger.error('Exception:%s', e)
-            logger.error(traceback.format_exc())
-
-    elif sub == 'install':
-        try:
+        elif sub == 'install':
             Logic.install()
             ret = {}
             return jsonify({})
-        except Exception as e: 
-            logger.error('Exception:%s', e)
-            logger.error(traceback.format_exc())
+    except Exception as e: 
+        logger.error('Exception:%s', e)
+        logger.error(traceback.format_exc())
 
 
