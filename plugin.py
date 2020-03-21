@@ -84,7 +84,7 @@ def first_menu(sub):
 def ajax(sub):
     try:
         if sub == 'setting_save':
-            ret = Logic.setting_save(request)
+            ret = ModelSetting.setting_save(request)
             return jsonify(ret)
         elif sub == 'status':
             todo = request.form['todo']
