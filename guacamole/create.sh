@@ -98,8 +98,6 @@ do
 	fi
 done
 
-cp /etc/guacamole/my.cnf /etc/
-
 #exec /usr/bin/mysqld --user=mysql --console --skip-name-resolve --skip-networking=0 $@
 
  
