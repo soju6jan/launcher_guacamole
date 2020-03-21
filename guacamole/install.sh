@@ -10,6 +10,8 @@ export GUACAMOLE_HOME=/etc/guacamole
 apk add --no-cache mariadb mariadb-client mariadb-server-utils pwgen
 /etc/guacamole/create.sh
 mv /app/data/custom/launcher_guacamole/guacamole/my.cnf /etc/
+chmod 0444 /etc/my.cnf
 #mysql --user=root --password=sjva < /etc/guacamole/create.sql
 #mysql --user=root --password=sjva guacamole_db < /etc/guacamole/initdb.sql
 #kill -9 `ps -ef | grep mysqld | awk '{print $1}'`
+ 
