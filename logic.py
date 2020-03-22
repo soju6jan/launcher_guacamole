@@ -31,6 +31,7 @@ class Logic(object):
     db_default = {
         'auto_start' : 'False',
         'url' : 'http://localhost:8080/guacamole',
+        'port' : '8080'
     }
 
     mysql_process = None
@@ -106,7 +107,9 @@ class Logic(object):
             cmd = ['/etc/guacamole/run.sh']
             Logic.mysql_process = subprocess.Popen(cmd)
 
-            cmd = ['/var/lib/tomcat/bin/catalina.sh', 'start']
+            #cmd = ['/var/lib/tomcat/bin/catalina.sh', 'start']
+            #Logic.current_process = subprocess.Popen(cmd)
+            cmd = ['/app/data/custom/launcher_guacamole/guacamole/tomcat_run.sh', ModelSetting.get('port')]
             Logic.current_process = subprocess.Popen(cmd)
     
     @staticmethod

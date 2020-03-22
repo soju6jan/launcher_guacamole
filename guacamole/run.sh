@@ -97,4 +97,4 @@ do
 	fi
 done
 
-exec /usr/bin/mysqld --port 43306 --user=mysql --console --skip-name-resolve --skip-networking=0 $@
+exec /usr/bin/mysqld --user=mysql --console --skip-name-resolve --skip-networking=0 $@
