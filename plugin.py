@@ -103,7 +103,6 @@ def ajax(sub):
             return jsonify(ret)
         elif sub == 'install':
             Logic.install()
-            ret = {}
             return jsonify({})
     except Exception as e: 
         logger.error('Exception:%s', e)
