@@ -12,7 +12,7 @@ import time
 # third-party
 
 # sjva 공용
-from framework import app, path_app_root, db
+from framework import app, path_app_root, db, path_data
 from framework.logger import get_logger
 from framework.util import Util
 
@@ -167,6 +167,47 @@ class Logic(object):
                 return True
             else:
                 return False
+        except Exception as e: 
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())
+
+
+    @staticmethod
+    def backup():
+        try:
+            def func():
+                import system
+                sql = os.path.join(path_data, 'db', 'guacamole_db.sql')
+                commands = [
+                    ['msg', u'잠시만 기다려주세요.'],
+                    ['mysqldump', '-P', '43306', '-u', 'root', '-psjva', '--no-create-info', 'guacamole_db', '>', sql],
+                    ['msg', u'파일 : %s' % sql],
+                    ['msg', u'백업이 완료되었습니다.'],
+                ]
+                system.SystemLogicCommand.start('백업', commands)
+            t = threading.Thread(target=func, args=())
+            t.setDaemon(True)
+            t.start()
+        except Exception as e: 
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())
+
+    @staticmethod
+    def restore():
+        try:
+            def func():
+                import system
+                sql = os.path.join(path_data, 'db', 'guacamole_db.sql')
+                commands = [
+                    ['msg', u'잠시만 기다려주세요.'],
+                    ['mysql', '-P', '43306', '-u', 'root', '-psjva', 'guacamole_db', '<', sql],
+                    ['msg', u'파일 : %s' % sql],
+                    ['msg', u'복원이 완료되었습니다.'],
+                ]
+                system.SystemLogicCommand.start('백업', commands)
+            t = threading.Thread(target=func, args=())
+            t.setDaemon(True)
+            t.start()
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())

@@ -104,6 +104,12 @@ def ajax(sub):
         elif sub == 'install':
             Logic.install()
             return jsonify({})
+        elif sub == 'backup':
+            Logic.backup()
+            return jsonify('')
+        elif sub == 'restore':
+            Logic.restore()
+            return jsonify('')
     except Exception as e: 
         logger.error('Exception:%s', e)
         logger.error(traceback.format_exc())

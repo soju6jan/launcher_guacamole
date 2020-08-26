@@ -2,6 +2,10 @@
 {% block content %}
 
 <div>
+  {{ macros.m_button_group([['global_setting_save_btn', '설정 저장']])}}
+  {{ macros.m_row_start('5') }}
+  {{ macros.m_row_end() }}
+
   {{ macros.setting_checkbox('status', '실행 상태', value=arg['status'], desc='On : 실행중') }}
   <form id='setting' name='setting'>
     {{ macros.setting_checkbox('auto_start', '시작시 자동실행', value=arg['auto_start'], desc=['On : 시작시 자동으로 실행합니다.']) }}
@@ -11,6 +15,7 @@
   </form>    
     {{ macros.m_hr()}}
     {{ macros.info_text_and_buttons('is_installed', '설치상태', [['install_btn', '설치']], value=arg['is_installed']) }}    
+    {{ macros.setting_button([['backup_btn', '백원'], ['restore_btn', '복원']], left='백업 & 복원', desc=['db 폴더 guacamole_db.sql']) }}    
     {{ macros.info_text_go('tmp', 'Guacamole 홈페이지', value='https://guacamole.apache.org') }}
 </div>
 
@@ -66,5 +71,33 @@ function do_install() {
     }
   });
 }
+
+$("body").on('click', '#backup_btn', function(e){
+  e.preventDefault();
+  $.ajax({
+    url: '/' + package_name + '/ajax/backup',
+    type: "POST", 
+    cache: false,
+    data:{},
+    dataType: "json",
+    success: function (data) {
+      command_modal_show('백업')
+    }
+  });
+});
+
+$("body").on('click', '#restore_btn', function(e){
+  e.preventDefault();
+  $.ajax({
+    url: '/' + package_name + '/ajax/restore',
+    type: "POST", 
+    cache: false,
+    data:{},
+    dataType: "json",
+    success: function (data) {
+      command_modal_show('복원')
+    }
+  });
+});
 </script>    
 {% endblock %}
