@@ -180,7 +180,8 @@ class Logic(object):
                 sql = os.path.join(path_data, 'db', 'guacamole_db.sql')
                 commands = [
                     ['msg', u'잠시만 기다려주세요.'],
-                    ['mysqldump', '-P', '43306', '-u', 'root', '-psjva', '--no-create-info', 'guacamole_db', '>', sql],
+                    #['mysqldump', '-P', '43306', '-u', 'root', '-psjva', '--no-create-info', 'guacamole_db', '>', sql],
+                    ['system', 'mysqldump -P 43306 -u root -psjva --no-create-info guacamole_db > %s' % sql],
                     ['msg', u'파일 : %s' % sql],
                     ['msg', u'백업이 완료되었습니다.'],
                 ]
