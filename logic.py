@@ -177,7 +177,7 @@ class Logic(object):
         try:
             def func():
                 import system
-                sql = os.path.join(path_data, 'db', 'guacamole_db.sql')
+                sql = os.path.join(path_data, 'db', 'backup_guacamole_db.sql')
                 commands = [
                     ['msg', u'잠시만 기다려주세요.'],
                     #['mysqldump', '-P', '43306', '-u', 'root', '-psjva', '--no-create-info', 'guacamole_db', '>', sql],
@@ -198,10 +198,11 @@ class Logic(object):
         try:
             def func():
                 import system
-                sql = os.path.join(path_data, 'db', 'guacamole_db.sql')
+                sql = os.path.join(path_data, 'db', 'backup_guacamole_db.sql')
                 commands = [
                     ['msg', u'잠시만 기다려주세요.'],
-                    ['mysql', '-P', '43306', '-u', 'root', '-psjva', 'guacamole_db', '<', sql],
+                    #['mysql', '-P', '43306', '-u', 'root', '-psjva', 'guacamole_db', '<', sql],
+                    ['system', 'mysql -P 43306 -u root -psjva guacamole_db < %s' % sql],
                     ['msg', u'파일 : %s' % sql],
                     ['msg', u'복원이 완료되었습니다.'],
                 ]
