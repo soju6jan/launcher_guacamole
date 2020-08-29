@@ -15,7 +15,7 @@
   </form>    
     {{ macros.m_hr()}}
     {{ macros.info_text_and_buttons('is_installed', '설치상태', [['install_btn', '설치']], value=arg['is_installed']) }}    
-    {{ macros.setting_button([['backup_btn', '백원'], ['restore_btn', '복원']], left='백업 & 복원', desc=['db 폴더 backup_guacamole_db.sql']) }}    
+    {{ macros.setting_button([['backup_btn', '백업'], ['restore_btn', '복원']], left='백업 & 복원', desc=['db 폴더 backup_guacamole_db.sql']) }}    
     {{ macros.info_text_go('tmp', 'Guacamole 홈페이지', value='https://guacamole.apache.org') }}
 </div>
 
