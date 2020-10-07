@@ -1,7 +1,7 @@
 #!/bin/sh
 apk add --no-cache openjdk8
 #wget http://apache.tt.co.kr/tomcat/tomcat-8/v8.5.50/bin/apache-tomcat-8.5.50.tar.gz
-wget http://apache.tt.co.kr/tomcat/tomcat-8/v8.5.57/bin/apache-tomcat-8.5.57.tar.gz
+wget http://apache.tt.co.kr/tomcat/tomcat-8/v8.5.58/bin/apache-tomcat-8.5.58.tar.gz
 tar xvzf apache-tomcat-8.5.57.tar.gz
 mv apache-tomcat-8.5.57 /var/lib/tomcat
 cp -R /app/data/custom/launcher_guacamole/guacamole /etc/guacamole/
