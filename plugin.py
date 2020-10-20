@@ -42,7 +42,7 @@ plugin_info = {
     'category_name' : 'launcher',
     'icon' : '',
     'developer' : 'soju6jan',
-    'description' : 'Guacamole 런처<br><a href="https://guacamole.apache.org" target="_blank">Guacamole 홈페이지</a><br><br>SSH, RDP, VNC 웹 클라이언트 입니다.<br>도커만 지원합니다.',
+    'description' : u'Guacamole 런처<br><a href="https://guacamole.apache.org" target="_blank">Guacamole 홈페이지</a><br><br>SSH, RDP, VNC 웹 클라이언트 입니다.<br>도커만 지원합니다.',
     'home' : 'https://github.com/soju6jan/launcher_guacamole',
     'more' : '',
     'running_type' : ['docker']
@@ -51,9 +51,9 @@ plugin_info = {
 
 # 메뉴 구성.
 menu = {
-    'main' : [package_name, 'Guacamole'],
+    'main' : [package_name, u'Guacamole'],
     'sub' : [
-        ['setting', '설정'], ['log', '로그']
+        ['setting', u'설정'], ['log', u'로그']
     ], 
     'category' : 'launcher',
 }  
